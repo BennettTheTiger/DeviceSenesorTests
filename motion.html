@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Motion</title>
+</head>
+<body>
+    <h4><a href="index.html">Home</a></h4>
+    <h4>Live Acceleration</h4>
+    <p>Acceleration x</p><span id="x"></span>
+    <p>Acceleration y</p><span id="y"></span>
+    <p>Acceleration z</p><span id="z"></span>
+
+    <div class="fastest">
+        <h3>Fastest Accelerations in m/s2</h3>
+        <p>Fastest X:<span id="maxX"></span></p>
+        <p>Fastest Y:<span id="maxY"></span></p>
+        <p>Fastest Z:<span id="maxZ"></span></p>
+    </div>
+
+    <button id="reset">Reset Fastest</button>
+</body>
+<script>
+    //globals
+    let xMax = 0;
+    let yMax = 0;
+    let zMax = 0;
+    //motion listener
+    window.addEventListener('devicemotion', function(event) {
+        //console.log(event.acceleration.x + ' m/s2');
+        document.querySelector('#x').textContent = event.acceleration.x;
+        document.querySelector('#y').textContent = event.acceleration.y;
+        document.querySelector('#z').textContent = event.acceleration.z;
+        //update new max
+        if(event.acceleration.x > xMax){
+           xMax = event.acceleration.x; 
+           document.querySelector('#maxX').textContent = xMax;
+        }
+        if(event.acceleration.y > yMax){
+           yMax = event.acceleration.y;
+           document.querySelector('#maxY').textContent = yMax; 
+        }
+        if(event.acceleration.z > zMax){
+           zMax = event.acceleration.z;
+           document.querySelector('#maxZ').textContent = zMax; 
+        }
+    });
+    //reset button
+    document.querySelector('#reset').addEventListener('click',function(){
+        xMax = 0;
+        yMax = 0;
+        zMax = 0;
+    });
+</script>
+</html>

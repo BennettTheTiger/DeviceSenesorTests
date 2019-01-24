@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gyro</title>
+</head>
+<body>
+    <h4><a href="index.html">Home</a></h4>
+    <!-- Live data-->
+    <h4>Live Data</h4>
+    <div class="data" style="text-align:center">
+        <p>X:<span id="x"></span></p>
+        <p>Y:<span id="y"></span></p>
+        <p>Z:<span id="z"></span></p>
+    </div>
+    <!-- Delta Data -->
+    <h4>Delta Data</h4>
+    <div class="delta" style="text-align:center">
+        <p>X:<span id="dx"></span></p>
+        <p>Y:<span id="dy"></span></p>
+        <p>Z:<span id="dz"></span></p>
+    </div>
+    <button id="reset">Set Origin</button>
+</body>
+<script>
+        //'origin'
+        let setOrigin = false;
+        var ox = 0;
+        var oy = 0;
+        var oz = 0;
+        //called on device orientation event
+        function handleOrientation(event) {
+            var absolute = event.absolute;
+            var alpha = event.alpha;
+            var beta = event.beta;
+            var gamma = event.gamma;
+        if(!setOrigin){
+            ox = alpha;
+            oy = beta;
+            oz = gamma;
+            setOrigin = true;
+        }
+        //Live data
+        document.querySelector('#x').textContent = alpha;
+        document.querySelector('#y').textContent = beta;
+        document.querySelector('#z').textContent = gamma;
+        //delta data
+        document.querySelector('#dx').textContent = alpha - ox;
+        document.querySelector('#dy').textContent = beta - oy;
+        document.querySelector('#dz').textContent = gamma - oz;
+        }
+        //listen for orientation events
+        window.addEventListener("deviceorientation", handleOrientation, true);        
+        //resets the origin
+        document.querySelector('#reset').addEventListener('click',function(){
+            setOrigin = false;
+        });
+    </script>
+</html>
